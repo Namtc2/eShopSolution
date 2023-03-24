@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "eShopSolution": "Server=ADMIN\\NAMTC;Database=eShopSolution;Trusted_Connection=True;"
+  }
+}
