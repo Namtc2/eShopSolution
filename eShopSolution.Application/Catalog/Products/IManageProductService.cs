@@ -24,7 +24,7 @@ namespace eShopSolution.Application.Catalog.Products
         //delete a product
         Task<int> Delete(int productId);
         //get all product by paging
-        Task<PagedResult<ProductViewModel>> GetAllPaging(GetProductPagingRequest request);
+        Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
 
         Task<int> AddImages(int productId, List<IFormFile> files);
         Task<int> RemoveImages(int imageId);

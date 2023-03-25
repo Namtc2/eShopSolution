@@ -5,7 +5,7 @@ using System.Text;
 
 namespace eShopSolution.ViewModels.Catalog.Products.Manage
 {
-    public class GetProductPagingRequest : PagingRequestBase
+    public class GetManageProductPagingRequest : PagingRequestBase
     {
         public string KeyWord { get; set; }
         public List<int> CatergoryIds { get; set; }
