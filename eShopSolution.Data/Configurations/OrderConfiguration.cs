@@ -7,7 +7,7 @@ using System.Text;
 
 namespace eShopSolution.Data.Configurations
 {
-    public  class OrderConfiguration : IEntityTypeConfiguration<Order>
+    public class OrderConfiguration : IEntityTypeConfiguration<Order>
     {
         public void Configure(EntityTypeBuilder<Order> builder)
         {
@@ -28,6 +28,8 @@ namespace eShopSolution.Data.Configurations
 
 
             builder.Property(x => x.ShipPhoneNumber).IsRequired().HasMaxLength(200);
+
+
         }
     }
 }

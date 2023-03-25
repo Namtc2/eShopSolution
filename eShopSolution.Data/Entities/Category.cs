@@ -1,4 +1,4 @@
-﻿using eShopSolution.Data.Enum;
+﻿using eShopSolution.Data.Enums;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
