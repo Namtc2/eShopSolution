@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace eShopSolution.Application
+namespace eShopSolution.ViewModels
 {
     public class Class1
     {
