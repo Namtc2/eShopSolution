@@ -1,5 +1,5 @@
 ﻿using eShopSolution.Data.Entities;
-using eShopSolution.Data.Enum;
+using eShopSolution.Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -13,8 +13,12 @@ namespace eShopSolution.Data.Configurations
         public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.ToTable("Categories");
-            builder.HasKey(c => c.Id);
+
+            builder.HasKey(x => x.Id);
+
             builder.Property(x => x.Id).UseIdentityColumn();
+
+
             builder.Property(x => x.Status).HasDefaultValue(Status.Active);
         }
     }
