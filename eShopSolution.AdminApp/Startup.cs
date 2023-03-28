@@ -1,10 +1,10 @@
 using eShopSolution.AdminApp.Services;
-using eShopSolution.AdminApp.Services.Impl;
 using eShopSolution.ViewModels.System.Users;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,21 +28,34 @@ namespace eShopSolution.AdminApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //service http client
             services.AddHttpClient();
+          
+            //add authentication by cookie
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
                 options.LoginPath = "/User/Login/";
                 options.AccessDeniedPath = "/User/Forbidden/";
             });
+
+            // add MVC
             services.AddControllersWithViews()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
+            services.AddDistributedMemoryCache();
+            // add session
+            services.AddSession(options =>
+            {
+                options.Cookie.Name = "eShopSolution";
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+            });
+
             services.AddTransient<IUserApiClient, UserApiClient>();
             IMvcBuilder builder = services.AddRazorPages();
             var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 #if DEBUG
             if(enviroment == Environments.Development)
             {
-                builder.AddRazorRuntimeCompilation();
+                //builder.AddRazorRuntimeCompilation();
             }
         }
 #endif
@@ -65,12 +78,25 @@ namespace eShopSolution.AdminApp
             app.UseRouting();
 
             app.UseAuthorization();
-
+            app.UseSession();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapGet("/readwritesession", async (context) =>
+                {
+                    int? count;
+                    count = context.Session.GetInt32("count");
+                    if(count == null)
+                    {
+                        count = 0;
+                    }
+                    count += 1;
+                    context.Session.SetInt32("count", count.Value);
+                    await context.Response.WriteAsync($"So lan truy cap la: {count}");
+                });
             });
         }
     }

@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace eShopSolution.AdminApp.Controllers
 {
@@ -24,9 +25,18 @@ namespace eShopSolution.AdminApp.Controllers
             _userApiClient = userApiClient;
             _configuration = configuration;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
         {
-            return RedirectToAction("Login");
+            var sessions = HttpContext.Session.GetString("Token");
+            var request = new GetUserPagingRequest()
+            {
+                BrearToken = sessions,
+                Keyword = keyword,
+                PageIndex = pageIndex,
+                PageSize = pageSize
+            };
+            var data = await _userApiClient.GetUsersPagings(request);
+            return View(data);
         }
         [HttpGet]
         public async Task<IActionResult> Login()
@@ -46,6 +56,7 @@ namespace eShopSolution.AdminApp.Controllers
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = false
             };
+            HttpContext.Session.SetString("Token", token);
             await HttpContext.SignInAsync(
                                             CookieAuthenticationDefaults.AuthenticationScheme,
                                             userPrincipal,
@@ -54,6 +65,7 @@ namespace eShopSolution.AdminApp.Controllers
         }
         public async Task<IActionResult> Logout()
         {
+            HttpContext.Session.Remove("Token");
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
         }

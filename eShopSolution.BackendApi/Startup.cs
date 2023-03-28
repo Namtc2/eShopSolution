@@ -1,5 +1,4 @@
 using eShopSolution.Application.Catalog.Products;
-using eShopSolution.Application.Catalog.Products.Impl;
 using eShopSolution.Application.Common;
 using eShopSolution.Application.Common.impl;
 using eShopSolution.Application.System.Users;
@@ -47,8 +46,7 @@ namespace eShopSolution.BackendApi
                 .AddEntityFrameworkStores<EShopDbContext>()
                 .AddDefaultTokenProviders();
             //service for manager product
-            services.AddTransient<IPublicProductService, PublicProductService>();
-            services.AddTransient<IManageProductService, ManageProductService>();
+            services.AddTransient<IProductService, ProductService>();
             //service for save file/image
             services.AddTransient<IStorageService, FileStorageService>();
             //service for login and authorization
