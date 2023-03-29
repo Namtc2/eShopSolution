@@ -26,7 +26,7 @@
                             <div class="card shadow-lg border-0 rounded-lg mt-5">
                                 <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng nhập</h3></div>
                                 <div class="card-body">
-                                    <form asp-action="Login" asp-controller="User" method="post">
+                                    <form asp-action="Login" asp-controller="Login" method="post">
                                         <div class="form-group">
                                             <label class="small mb-1" for="inputEmailAddress">Tên đăng nhập</label>
                                             <input class="form-control py-4" asp-for="UserName" type="text" placeholder="Nhập tên đăng nhập" />
@@ -43,7 +43,7 @@
                                         </div>
                                         <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
                                             <a class="small" href="/User/ForgotPassword">Quên mật khẩu?</a>
-                                            <button type="submit" class="btn btn-primary" href="index.html">Đăng nhập</button>
+                                            <button type="submit" class="btn btn-primary" >Đăng nhập</button>
                                         </div>
                                     </form>
                                 </div>

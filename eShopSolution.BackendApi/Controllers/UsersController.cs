@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace eShopSolution.BackendApi.Controllers
@@ -29,15 +30,19 @@ namespace eShopSolution.BackendApi.Controllers
                 return BadRequest("Username or password is incorrect.");            
             return Ok(resultToken);
         }
-        [HttpPost]
+        [HttpPost("Register")]
         [AllowAnonymous] //can perform when hasn't login
-        public async Task<ActionResult> Register([FromForm] RegisterRequest request)
+        public async Task<ActionResult> Register([FromBody] RegisterRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var result = await _userService.Register(request);
-            if (!result)
-                return BadRequest("Register is unsuccessful.");
+            if (result.Errors != null && result.Errors.Count() > 0)
+            {
+                string content = "";
+                result.Errors.ToList().ForEach(x => content += x.Description + ", ");
+                return BadRequest(content);
+            }               
             return Ok();
         }
         //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=

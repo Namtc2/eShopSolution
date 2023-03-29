@@ -1,5 +1,6 @@
 ﻿using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.System.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace eShopSolution.Application.System.Users
     public interface IUserService
     {
         Task<string> Authenticate(LoginRequest request);
-        Task<bool> Register(RegisterRequest request);
+        Task<IdentityResult> Register(RegisterRequest request);
         Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request);
     }
 }

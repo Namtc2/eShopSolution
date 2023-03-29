@@ -2,6 +2,7 @@
 using eShopSolution.Utilities.Exceptions;
 using eShopSolution.ViewModels.Common;
 using eShopSolution.ViewModels.System.Users;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -89,7 +90,7 @@ namespace eShopSolution.Application.System.Users
             return pagedResult;
         }
 
-        public async Task<bool> Register(RegisterRequest request)
+        public async Task<IdentityResult> Register(RegisterRequest request)
         {
             var user = new AppUser()
             {
@@ -103,9 +104,9 @@ namespace eShopSolution.Application.System.Users
             var result = await _userManager.CreateAsync(user, request.Password);
             if (result.Succeeded)
             {
-                return true;    
+                return result;    
             }
-            return false;
+            return result;
 
         }
     }
