@@ -30,13 +30,12 @@ namespace eShopSolution.AdminApp.Controllers
             var sessions = HttpContext.Session.GetString("Token");
             var request = new GetUserPagingRequest()
             {
-                BrearToken = sessions,
                 Keyword = keyword,
                 PageIndex = pageIndex,
                 PageSize = pageSize
             };
             var data = await _userApiClient.GetUsersPagings(request);
-            return View(data);
+            return View(data.Data);
         }       
         [HttpGet]
         public IActionResult Create()
@@ -50,10 +49,43 @@ namespace eShopSolution.AdminApp.Controllers
             if (!ModelState.IsValid)
                 return View(ModelState);
             var result = await _userApiClient.RegisterUser(request);
-            if (result.IsSuccessStatusCode)
+            if (result.IsSuccessed)
                 return RedirectToAction("Index");
+            ModelState.AddModelError("", result.Message);
             return View(request);
         }
-      
+        [HttpPost("Update")]
+        public async Task<IActionResult> Update(UserUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(ModelState);
+            var result = await _userApiClient.UpdateUser(request.Id, request);
+            if (result.IsSuccessed)
+                return RedirectToAction("Index");
+            ModelState.AddModelError("", result.Message);
+            return View(request);
+
+        }
+        [HttpGet("Update")]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var result = await _userApiClient.GetById(id);
+            if (result.IsSuccessed)
+            {
+                var user = result.Data;
+                var updateRequest = new UserUpdateRequest()
+                {
+                    Dob = user.Dob,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    PhoneNumber = user.PhoneNumber,
+                    Id = id
+                };
+                return View(updateRequest);
+            }
+            return RedirectToAction("Error", "Home");
+           
+        }
     }
 }

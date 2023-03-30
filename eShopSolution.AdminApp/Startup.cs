@@ -48,6 +48,7 @@ namespace eShopSolution.AdminApp
                 options.Cookie.Name = "eShopSolution";
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
             });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IUserApiClient, UserApiClient>();
             IMvcBuilder builder = services.AddRazorPages();

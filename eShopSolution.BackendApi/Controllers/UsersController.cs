@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,24 +27,35 @@ namespace eShopSolution.BackendApi.Controllers
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
             var resultToken =await _userService.Authenticate(request);
-            if(string.IsNullOrEmpty(resultToken))
-                return BadRequest("Username or password is incorrect.");            
+            if(string.IsNullOrEmpty(resultToken.Data))
+                return BadRequest(resultToken);            
             return Ok(resultToken);
         }
-        [HttpPost("Register")]
+        [HttpPost]
         [AllowAnonymous] //can perform when hasn't login
         public async Task<ActionResult> Register([FromBody] RegisterRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var result = await _userService.Register(request);
-            if (result.Errors != null && result.Errors.Count() > 0)
-            {
-                string content = "";
-                result.Errors.ToList().ForEach(x => content += x.Description + ", ");
-                return BadRequest(content);
+            if (!result.IsSuccessed)
+            {               
+                return BadRequest(result);
             }               
-            return Ok();
+            return Ok(result);
+        }
+        //PUT http://localhost/api/user/id
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var result = await _userService.Update(id, request);
+            if (!result.IsSuccessed)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
         //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
         [HttpGet("paging")]
@@ -54,7 +66,15 @@ namespace eShopSolution.BackendApi.Controllers
             var users = await _userService.GetUsersPaging(request);
             return Ok(users);
         }
-
+        //http://localhost/api/users/paging?pageIndex=1&pageSize=10&keyword=
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var users = await _userService.GetById(id);
+            return Ok(users);
+        }
 
     }
 }
