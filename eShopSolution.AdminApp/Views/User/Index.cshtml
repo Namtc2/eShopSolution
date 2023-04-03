@@ -12,10 +12,30 @@
             <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
             <li class="breadcrumb-item active">Danh sách người dùng</li>
         </ol>        
-        <div class="card mb-4">
+        <div class="card mb-12">
             <div class="card-header">
-                <a asp-action="Create" asp-asp-controller="User" class="btn btn-success">Tạo mới</a>
+                <div class="row">
+                    <div class="col-md-6 col-xs-12">
+                        <a asp-action="Create" asp-controller="User" class="btn btn-success">Tạo mới</a>
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <form asp-action="Index" asp-controller="User" method="get">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="text" value="@ViewBag.Keyword" class="form-control" name="keyword" />
+                                </div>
+                                <div class="col-md-3">
+                                    <button type="submit" class="btn btn-success">Tìm</button>
+                                    <button type="button"  onclick="window.location.href='/User/Index'" class="btn btn-dark">Reset</button>
+                                </div>
+                            </div>                                                   
+                            
+                        </form>
+                    </div>
+                </div>
+                
             </div>
+           
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table">

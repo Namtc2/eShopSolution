@@ -31,16 +31,22 @@ namespace eShopSolution.AdminApp.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> Login(LoginRequest request)
+        public async Task<IActionResult> Index(LoginRequest request)
         {
             if (!ModelState.IsValid)
                 return View(ModelState);
             var result = await _userApiClient.Authenticate(request);
+            if (result.Data == null)
+            {
+                ModelState.AddModelError("", result.Message);
+                return View("Index");
+            }
             if (!result.IsSuccessed)
             {
                 ModelState.AddModelError("", result.Data);
-                return View(ModelState);
+                return View("Index");
             }
+            
             var userPrincipal = this.ValidateToken(result.Data);
             var authProperties = new AuthenticationProperties
             {
