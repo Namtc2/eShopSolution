@@ -12,6 +12,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using eShopSolution.Utilities.Constants;
 
 namespace eShopSolution.AdminApp.Controllers
 {
@@ -53,7 +54,8 @@ namespace eShopSolution.AdminApp.Controllers
                 ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(10),
                 IsPersistent = false
             };
-            HttpContext.Session.SetString("Token", result.Data);
+            HttpContext.Session.SetString(SystemConstants.AppSetting.Token, result.Data);
+            HttpContext.Session.SetString(SystemConstants.AppSetting.DefaultLanguageId, _configuration[SystemConstants.AppSetting.DefaultLanguageId]);
             await HttpContext.SignInAsync(
                                             CookieAuthenticationDefaults.AuthenticationScheme,
                                             userPrincipal,

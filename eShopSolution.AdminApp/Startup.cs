@@ -47,11 +47,13 @@ namespace eShopSolution.AdminApp
             {
                 options.Cookie.Name = "eShopSolution";
                 options.IdleTimeout = TimeSpan.FromMinutes(30);
+
             });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IUserApiClient, UserApiClient>();
             services.AddTransient<IRoleApiClient, RoleApiClient>();
+            services.AddTransient<ILanguageApiClient, LanguageApiClient>();
             IMvcBuilder builder = services.AddRazorPages();
             var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 #if DEBUG
