@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eShopSolution.ViewModels.Common;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -20,5 +21,6 @@ namespace eShopSolution.ViewModels.System.Users
         public string UserName { get; set; }
         [Display(Name = "Ngày sinh")]
         public DateTime Dob { get; set; }
+        public List<string> Roles { get; set; }
     }
 }

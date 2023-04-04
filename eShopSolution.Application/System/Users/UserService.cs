@@ -1,4 +1,5 @@
 ﻿using eShopSolution.Application.Common;
+using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
 using eShopSolution.Utilities.Exceptions;
 using eShopSolution.ViewModels.Common;
@@ -26,14 +27,15 @@ namespace eShopSolution.Application.System.Users
         private readonly SignInManager<AppUser> _signInManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IConfiguration _configuration;
-
+        private readonly EShopDbContext _context;
         public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,
-                           RoleManager<AppRole> roleManager, IConfiguration configuration)
+                           RoleManager<AppRole> roleManager, IConfiguration configuration, EShopDbContext context)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
             _configuration = configuration;
+            _context = context;
         }
         public async Task<ApiResult<string>> Authenticate(LoginRequest request)
         {
@@ -61,7 +63,7 @@ namespace eShopSolution.Application.System.Users
                     claims,
                     expires: DateTime.Now.AddHours(3),
                     signingCredentials: creds);
-            var tokenValue =  new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenValue = new JwtSecurityTokenHandler().WriteToken(token);
             return new ApiSuccessResult<string>(tokenValue);
 
         }
@@ -71,8 +73,8 @@ namespace eShopSolution.Application.System.Users
             var user = await _userManager.FindByIdAsync(Id.ToString());
             if (user == null)
                 return new ApiErrorResult<bool>("User không tồn tại");
-            var result =await _userManager.DeleteAsync(user);
-            if(result.Succeeded)
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
                 return new ApiSuccessResult<bool>();
             else
                 return new ApiErrorResult<bool>("Xóa không thành công");
@@ -80,9 +82,10 @@ namespace eShopSolution.Application.System.Users
 
         public async Task<ApiResult<UserViewModel>> GetById(Guid Id)
         {
-            var user =await _userManager.FindByIdAsync(Id.ToString());
+            var user = await _userManager.FindByIdAsync(Id.ToString());
             if (user == null)
                 return new ApiErrorResult<UserViewModel>("User không tồn tại");
+            var roles = await _userManager.GetRolesAsync(user);
             var uvm = new UserViewModel()
             {
                 Email = user.Email,
@@ -91,7 +94,8 @@ namespace eShopSolution.Application.System.Users
                 FirstName = user.FirstName,
                 Id = user.Id,
                 LastName = user.LastName,
-                Dob = user.Dob
+                Dob = user.Dob,
+                Roles = roles.ToList()
             };
             return new ApiSuccessResult<UserViewModel>(uvm);
         }
@@ -155,14 +159,49 @@ namespace eShopSolution.Application.System.Users
 
         }
 
+        public async Task<ApiResult<bool>> RoleAssign(Guid Id, RoleAssignRequest request)
+        {
+            var user = await _userManager.FindByIdAsync(Id.ToString());
+            if (user == null)
+            {
+                return new ApiErrorResult<bool>("Tài khoản không tồn tại");
+            }
+            var userRolesIds = await _context.UserRoles.Where(x => x.UserId == request.Id).Select(x => x.RoleId).ToListAsync();
+            var roles = await _context.Roles.Where(x => userRolesIds.Contains(x.Id)).ToListAsync();
+
+            if (request.Roles != null)
+            {
+                foreach (var role in request.Roles)
+                {
+                    if (role.Selected && !userRolesIds.Contains(role.Id))
+                    {
+                        _context.UserRoles.Add(new IdentityUserRole<Guid>
+                        {
+                            RoleId = role.Id,
+                            UserId = user.Id
+                        });
+
+                    }
+                    else if (!role.Selected && userRolesIds.Contains(role.Id))
+                    {
+                        var userRole = await _context.UserRoles.Where(x => x.RoleId == role.Id && x.UserId == user.Id).FirstOrDefaultAsync();
+                        if (userRole != null)
+                            _context.UserRoles.Remove(userRole);
+                    }
+                    await _context.SaveChangesAsync();
+                }
+            }
+            return new ApiSuccessResult<bool>();
+        }
+
         public async Task<ApiResult<bool>> Update(Guid Id, UserUpdateRequest request)
         {
-            if (await _userManager.Users.AnyAsync(x=>x.Email == request.Email && x.Id != Id))
+            if (await _userManager.Users.AnyAsync(x => x.Email == request.Email && x.Id != Id))
             {
                 return new ApiErrorResult<bool>("Email đã tồn tại");
             }
-            var user =await _userManager.FindByIdAsync(Id.ToString());
-            
+            var user = await _userManager.FindByIdAsync(Id.ToString());
+
             user.Dob = request.Dob;
             user.FirstName = request.FirstName;
             user.LastName = request.LastName;
@@ -179,7 +218,7 @@ namespace eShopSolution.Application.System.Users
         public async Task<ApiResult<UserViewModel>> Update(Guid Id)
         {
             var user = await _userManager.FindByIdAsync(Id.ToString());
-            if(user == null)
+            if (user == null)
             {
                 return new ApiErrorResult<UserViewModel>("User không tồn tại");
             }

@@ -1,6 +1,7 @@
 using eShopSolution.Application.Catalog.Products;
 using eShopSolution.Application.Common;
 using eShopSolution.Application.Common.impl;
+using eShopSolution.Application.System.Roles;
 using eShopSolution.Application.System.Users;
 using eShopSolution.Data.EF;
 using eShopSolution.Data.Entities;
@@ -54,6 +55,7 @@ namespace eShopSolution.BackendApi
             services.AddTransient<UserManager<AppUser>, UserManager<AppUser>>();
             services.AddTransient<RoleManager<AppRole>, RoleManager<AppRole>>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient <IRoleService, RoleService>();
 
             //service for validate viewmodel before to action
             //services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();

@@ -1,0 +1,52 @@
+﻿@model eShopSolution.ViewModels.System.Users.RoleAssignRequest
+
+@{
+    ViewData["Title"] = "Chi tiết người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h4>RoleAssignRequest</h4>
+<hr />
+
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Gán quyền người dùng</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Gán quyền người dùng</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <a asp-action="Index" asp-asp-controller="User" class="btn btn-success">Về danh sách</a>
+            </div>
+            <div class="card-body justify-content-center col-md-12">
+                <div class="row">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form asp-action="RoleAssign">
+                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" asp-for="Id" />
+                                @for(var i = 0; i < Model.Roles.Count; i++)
+                                {
+                                    <div class="form-group">
+                                        <label asp-for="Roles[i].Name" class="control-label"></label>
+                                        <label>
+                                            @Model.Roles[i].Name
+                                            <input type="checkbox" asp-for="Roles[i].Selected" />
+                                            <input type="hidden" asp-for="Roles[i].Id" />
+                                            <input type="hidden" asp-for="Roles[i].Name" />
+                                        </label>                                        
+                                        <span asp-validation-for="Id" class="text-danger"></span>
+                                    </div>
+                                }
+                                <div class="form-group">
+                                    <input type="submit" value="Lưu" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
