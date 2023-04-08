@@ -14,7 +14,7 @@ namespace eShopSolution.Application.Catalog.Products
 {
     public interface IProductService
     {
-        Task<ProductViewModel> GetById(int productId, string languageId);
+        Task<ApiResult<ProductViewModel>> GetById(int productId, string languageId);
         //create a product
         Task<int> Create(ProductCreateRequest request);
 

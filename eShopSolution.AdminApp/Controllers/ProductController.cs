@@ -18,7 +18,7 @@ namespace eShopSolution.AdminApp.Controllers
             _productApiClient = productApiClient;
             _configuration = configuration;
         }
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 1)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
         {
             var langId = HttpContext.Session.GetString(SystemConstants.AppSetting.DefaultLanguageId);
             var request = new GetManageProductPagingRequest()
@@ -35,6 +35,28 @@ namespace eShopSolution.AdminApp.Controllers
                 ViewBag.SuccessMsg = TempData["result"];
             }
             return View(data.Data);
+        }
+        [HttpGet] 
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [Consumes("multipart/form-data")] 
+        
+        public async Task<IActionResult> Create([FromForm] ProductCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+                return View(request);
+            var result = await _productApiClient.CreateProduct(request);
+            if (result.IsSuccessed)
+            {
+                TempData["result"] = "Thêm mới sản phẩm thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", result.Message);
+            return View(request);
         }
     }
 }

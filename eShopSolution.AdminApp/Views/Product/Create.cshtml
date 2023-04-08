@@ -1,0 +1,90 @@
+﻿@model eShopSolution.ViewModels.Catalog.Products.Manage.ProductCreateRequest
+
+@{
+    ViewData["Title"] = "Tạo mới sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<main>
+    <div class="container-fluid">
+        <h1 class="mt-4">Tạo mới sản phẩm</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Tạo mới sản phẩm</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <a asp-action="Index" asp-asp-controller="Product" class="btn btn-success">Về danh sách</a>
+            </div>
+            <div class="card-body justify-content-center col-md-12">
+                <form asp-action="Create" enctype="multipart/form-data" method="post">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Name" class="control-label"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="OriginalPrice" type="number" class="control-label"></label>
+                                <input asp-for="OriginalPrice" class="form-control" />
+                                <span asp-validation-for="OriginalPrice" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Price" class="control-label"></label>
+                                <input asp-for="Price" type="number" class="form-control" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Stock" type="number" class="control-label"></label>
+                                <input asp-for="Stock" class="form-control" />
+                                <span asp-validation-for="Stock" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description" class="control-label"></label>
+                                <textarea asp-for="Description" rows="5" class="form-control"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label asp-for="Details" class="control-label"></label>
+                                <textarea asp-for="Details" rows="5" class="form-control" ></textarea>
+                                <span asp-validation-for="Details" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SeoDescription" class="control-label"></label>
+                                <input asp-for="SeoDescription" class="form-control" />
+                                <span asp-validation-for="SeoDescription" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SeoTitle" class="control-label"></label>
+                                <input asp-for="SeoTitle" class="form-control" />
+                                <span asp-validation-for="SeoTitle" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="SeoAlias" class="control-label"></label>
+                                <input asp-for="SeoAlias" class="form-control" />
+                                <span asp-validation-for="SeoAlias" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ThumbnailImage" class="control-label"></label>
+                                <input asp-for="ThumbnailImage" type="file" class="form-control" />
+                                <span asp-validation-for="ThumbnailImage" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <input type="submit" value="Lưu" class="btn btn-primary" />
+                        </div>
+                    </div>                   
+                </form>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+
