@@ -9,5 +9,6 @@ namespace eShopSolution.ViewModels.Catalog.Products.Manage
     {
         public string KeyWord { get; set; }
         public List<int> CatergoryIds { get; set; }
+        public string LanguageId { get; set; }
     }
 }

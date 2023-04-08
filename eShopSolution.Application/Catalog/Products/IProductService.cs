@@ -1,4 +1,5 @@
-﻿using eShopSolution.ViewModels.Catalog.ProductImages;
+﻿using eShopSolution.Application.Common;
+using eShopSolution.ViewModels.Catalog.ProductImages;
 using eShopSolution.ViewModels.Catalog.Products;
 using eShopSolution.ViewModels.Catalog.Products.Manage;
 using eShopSolution.ViewModels.Catalog.Products.Public;
@@ -27,7 +28,7 @@ namespace eShopSolution.Application.Catalog.Products
         //delete a product
         Task<int> Delete(int productId);
         //get all product by paging
-        Task<PagedResult<ProductViewModel>> GetAllPaging(GetManageProductPagingRequest request);
+        Task<ApiResult<PagedResult<ProductViewModel>>> GetAllPaging(GetManageProductPagingRequest request);
         Task<int> AddImage(int productId, ProductImageCreateRequest request);
         Task<int> RemoveImage(int imageId);
         Task<int> UpdateImage(int imageId, ProductImageUpdateRequest request);
