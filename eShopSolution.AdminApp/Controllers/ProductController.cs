@@ -1,4 +1,4 @@
-﻿using eShopSolution.AdminApp.Services;
+﻿using eShopSolution.ApiIntegration;
 using eShopSolution.Utilities.Constants;
 using eShopSolution.ViewModels.Catalog.Products.Manage;
 using eShopSolution.ViewModels.System.Users;
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace eShopSolution.AdminApp.Controllers
 {
-    public class ProductController : Controller
+	public class ProductController : Controller
     {
         private readonly IProductApiClient _productApiClient;
         private readonly IConfiguration _configuration;

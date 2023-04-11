@@ -1,4 +1,4 @@
-using eShopSolution.AdminApp.Services;
+using eShopSolution.ApiIntegration;
 using eShopSolution.ViewModels.System.Users;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace eShopSolution.AdminApp
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IConfiguration configuration)
         {

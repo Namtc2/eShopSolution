@@ -1,5 +1,5 @@
 ﻿using eShopSolution.AdminApp.Models;
-using eShopSolution.AdminApp.Services;
+using eShopSolution.ApiIntegration;
 using eShopSolution.Utilities.Constants;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eShopSolution.AdminApp.Controllers.Components
 {
-    public class NavigationViewComponent: ViewComponent
+	public class NavigationViewComponent: ViewComponent
     {
         private readonly ILanguageApiClient _languageApiClient;
         public NavigationViewComponent(ILanguageApiClient languageApiClient)

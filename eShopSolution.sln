@@ -26,7 +26,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Domain", "2. Domain", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Hosts", "3. Hosts", "{2FF1B8F4-C26E-4473-923F-74A90904B420}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopSolution.AdminApp", "eShopSolution.AdminApp\eShopSolution.AdminApp.csproj", "{6BE772C3-5A43-4BBC-8635-D2261DE0946C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eShopSolution.AdminApp", "eShopSolution.AdminApp\eShopSolution.AdminApp.csproj", "{6BE772C3-5A43-4BBC-8635-D2261DE0946C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eShopSolution.ApiIntegration", "eShopSolution.ApiIntegration\eShopSolution.ApiIntegration.csproj", "{0692DB4B-4272-429A-B2CE-F5AB90F69278}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,10 @@ Global
 		{6BE772C3-5A43-4BBC-8635-D2261DE0946C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BE772C3-5A43-4BBC-8635-D2261DE0946C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BE772C3-5A43-4BBC-8635-D2261DE0946C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0692DB4B-4272-429A-B2CE-F5AB90F69278}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0692DB4B-4272-429A-B2CE-F5AB90F69278}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0692DB4B-4272-429A-B2CE-F5AB90F69278}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0692DB4B-4272-429A-B2CE-F5AB90F69278}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{B2F71DD8-9379-4DA7-80EB-9C4A330035E4} = {2FF1B8F4-C26E-4473-923F-74A90904B420}
 		{4B173C74-F071-4CC6-9E8E-DDE23CFF10CD} = {2FF1B8F4-C26E-4473-923F-74A90904B420}
 		{6BE772C3-5A43-4BBC-8635-D2261DE0946C} = {2FF1B8F4-C26E-4473-923F-74A90904B420}
+		{0692DB4B-4272-429A-B2CE-F5AB90F69278} = {2FF1B8F4-C26E-4473-923F-74A90904B420}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {13DFAFD3-DFE6-4EC7-88A8-2850DE432113}

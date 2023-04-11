@@ -1,5 +1,4 @@
-﻿using eShopSolution.AdminApp.Services;
-using eShopSolution.ViewModels.System.Users;
+﻿using eShopSolution.ViewModels.System.Users;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -15,10 +14,11 @@ using System;
 using Microsoft.AspNetCore.Http;
 using System.Linq;
 using System.Data;
+using eShopSolution.ApiIntegration;
 
 namespace eShopSolution.AdminApp.Controllers
 {
-    public class UserController : BaseController
+	public class UserController : BaseController
     {
         private readonly IUserApiClient _userApiClient;
         private readonly IConfiguration _configuration;
