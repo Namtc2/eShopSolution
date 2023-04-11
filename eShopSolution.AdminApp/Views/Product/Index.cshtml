@@ -28,8 +28,13 @@
                     <div class="col-md-6 col-xs-12">
                         <form asp-action="Index" asp-controller="Product" method="get">
                             <div class="row">
-                                <div class="col-md-9">
+                                <div class="col-md-4">
                                     <input type="text" value="@ViewBag.Keyword" class="form-control" name="keyword" />
+                                </div>
+                                <div class="col-md-4">
+                                    <select name="categoryId" onchange="this.form.submit()" asp-items="@ViewBag.Categories" class="form-control">
+                                        <option>--Chọn danh mục--</option>
+                                    </select>
                                 </div>
                                 <div class="col-md-3">
                                     <button type="submit" class="btn btn-success">Tìm</button>

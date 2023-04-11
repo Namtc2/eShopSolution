@@ -55,15 +55,10 @@ namespace eShopSolution.AdminApp
             services.AddTransient<IRoleApiClient, RoleApiClient>();
             services.AddTransient<ILanguageApiClient, LanguageApiClient>();
             services.AddTransient<IProductApiClient, ProductApiClient>();
+            services.AddTransient<ICategoryApiClient, CategoryApiClient>();
             IMvcBuilder builder = services.AddRazorPages();
-            var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-#if DEBUG
-            if(enviroment == Environments.Development)
-            {
-                //builder.AddRazorRuntimeCompilation();
-            }
+            var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");            
         }
-#endif
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

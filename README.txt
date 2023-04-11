@@ -16,3 +16,6 @@
 -Create Configuration for each entity to have table: builder.toTable(""), builder.Properies(x=>x.property),.....
 -Add config into OnModelCreating in EShopDBContext
 -https://learn.microsoft.com/en-us/ef/core/miscellaneous/connection-strings
+
+## Admin template: https://startbootstrap.com/templates/sb-admin/
+## Portal template:https://www.free-css.com/free-css-templates/page194/bootstrap-shop

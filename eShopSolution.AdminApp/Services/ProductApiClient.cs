@@ -68,7 +68,8 @@ namespace eShopSolution.AdminApp.Services
            var data = await base.GetAsync<ApiResult<PagedResult<ProductViewModel>>>($"/api/products/paging?pageIndex={request.PageIndex}" +
                                                                                     $"&pageSize={request.PageSize}" +
                                                                                     $"&keyword={request.KeyWord}" +
-                                                                                    $"&languageId={request.LanguageId}");
+                                                                                    $"&languageId={request.LanguageId}" +
+                                                                                    $"&categoryId={request.CategoryId}");
             return data;
         }
     }
