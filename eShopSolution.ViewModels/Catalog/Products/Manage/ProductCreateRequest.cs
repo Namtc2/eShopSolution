@@ -23,7 +23,8 @@ namespace eShopSolution.ViewModels.Catalog.Products.Manage
 
         public string SeoAlias { get; set; }
         public string LanguageId { set; get; }
-        [Required(ErrorMessage ="Bạn phải chọn ảnh sản phẩm")]
+		public bool? IsFeatured { set; get; }
+		[Required(ErrorMessage ="Bạn phải chọn ảnh sản phẩm")]
         public IFormFile ThumbnailImage { set; get; }
     }
 }
